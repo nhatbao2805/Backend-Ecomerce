@@ -1,0 +1,1 @@
+Chứa những cái hàm class tính năng thường hay sử dụng
