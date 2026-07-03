@@ -1,4 +1,4 @@
-const app = require("./app");
+const app = require("./src/app");
 
 // khởi động network nodeJS
 const server = app.listen(3001, () => {
