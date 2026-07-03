@@ -2,6 +2,7 @@ const compression = require('compression');
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
+
 //khởi tạo express
 
 const app = express();
@@ -25,7 +26,9 @@ app.use(compression());
 
 
 //init db
-
+require('./dbs/init.mongodb');
+const { checkOverload } = require('./helpers/check.connection.');
+checkOverload();
 //init route
 app.get("/", (req, res, next) => {
     const strCompress = "Hello nnn";
