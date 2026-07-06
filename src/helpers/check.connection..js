@@ -18,8 +18,8 @@ const checkOverload = () => {
         const numMemory = os.freemem() / 1024 / 1024 / 1024; // lấy dung lượng ram
         //Example maxium number of connections based on number of cores
         const maxConnections = numCores * 5;
-        console.log(`Number of connections: ${numConnection}`);
-        console.log(`Memory usage: ${numMemory / 1024 / 1024} MB`)
+        // console.log(`Number of connections: ${numConnection}`);
+        // console.log(`Memory usage: ${numMemory / 1024 / 1024} MB`)
         if (numConnection >= maxConnections) {
             console.log('Connection overload detected');
             // notify.send() to team for sever overload 

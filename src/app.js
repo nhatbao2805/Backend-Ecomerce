@@ -1,3 +1,4 @@
+require('dotenv').config();
 const compression = require('compression');
 const express = require('express');
 const morgan = require('morgan');
@@ -23,21 +24,13 @@ app.use(compression());
  giúp giảm băng thông và tăng tốc độ tải trang,
   đặc biệt với response JSON lớn hoặc file tĩnh.
 */
-
+// const { checkOverload } = require('./helpers/check.connection.');
+// checkOverload();
 
 //init db
 require('./dbs/init.mongodb');
-const { checkOverload } = require('./helpers/check.connection.');
-checkOverload();
-//init route
-app.get("/", (req, res, next) => {
-    const strCompress = "Hello nnn";
-    return res.status(200).json({
-        message: "welcome ",
-        metaData: strCompress.repeat(10000)
-    })
-})
-
+//init router
+app.use('', require('./routes/index'))
 //handling errors
 
 
