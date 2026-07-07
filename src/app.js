@@ -8,7 +8,6 @@ const helmet = require('helmet');
 
 const app = express();
 
-//init middlewears
 app.use(morgan("dev"));
 /*
 morgan("dev") -> thường dùng cho môi trường dev để in ra các thông tin về giao thức phản hồi
@@ -20,6 +19,11 @@ morgan("tiny")
 app.use(helmet());
 /* dùng để ngăn chặn các bên thứ 3 vào đọc cookies của mình */
 app.use(compression());
+//init middlewears
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 /*
  giúp giảm băng thông và tăng tốc độ tải trang,
   đặc biệt với response JSON lớn hoặc file tĩnh.

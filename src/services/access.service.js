@@ -1,6 +1,9 @@
 const shopModel = require("../models/shop.model");
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const KeyTokenService = require("./keyToken.servcie");
+const { createTokenPair } = require("../auth/authUtils");
+const { getInforData } = require("../utils");
 const RoleShop = {
     SHOP: 'SHOP',
     WRITER: 'WRITER',
@@ -30,11 +33,43 @@ class AccessService {
             })
 
             if (newShop) {
+                // cái này chỉ dành cho những hệ thống lớn hiện nay ngta đang ứng dụng vào trong một cái usb để mở khóa
                 // created privateKey publicKey => privateKey là trả cho ng dùng kh lưu trong hệ thống, còn puiblicKey ngược lại
                 // publicKey dùng để verifyToken ( tại vì giả sử hacker có log vào đc database thì cx chỉ có thể lấy ra để sign token thôi)
-                const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-                    modulusLength: 4096
+                // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
+                //     modulusLength: 4096,
+                //     privateKeyEncoding: {
+                //         type: 'pkcs1',
+                //         format: "pem"
+                //     },
+                //     publicKeyEncoding: {
+                //         type: 'pkcs1',
+                //         format: "pem"
+                //     }
+                // })
+
+                const publicKeyString = await KeyTokenService.createKeyToken({
+                    userId: newShop._id,
+                    publicKey: publicKey
                 })
+
+                if (!publicKeyString) {
+                    return ({
+                        code: "xxx",
+                        messgae: "publicKeyString error !"
+                    })
+                }
+
+                const pubicKeyObject = crypto.createPublicKey(publicKeyString)
+
+                const tokens = await createTokenPair({ userId: newShop._id, email }, pubicKeyObject, privateKey);
+                return {
+                    code: 201,
+                    metaData: {
+                        shop: getInforData({ fields: ["_id", "email", "nanme"], object: newShop }),
+                        tokens
+                    }
+                }
             }
 
         } catch (error) {
