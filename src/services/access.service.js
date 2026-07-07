@@ -33,36 +33,23 @@ class AccessService {
             })
 
             if (newShop) {
-                // cái này chỉ dành cho những hệ thống lớn hiện nay ngta đang ứng dụng vào trong một cái usb để mở khóa
-                // created privateKey publicKey => privateKey là trả cho ng dùng kh lưu trong hệ thống, còn puiblicKey ngược lại
-                // publicKey dùng để verifyToken ( tại vì giả sử hacker có log vào đc database thì cx chỉ có thể lấy ra để sign token thôi)
-                // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-                //     modulusLength: 4096,
-                //     privateKeyEncoding: {
-                //         type: 'pkcs1',
-                //         format: "pem"
-                //     },
-                //     publicKeyEncoding: {
-                //         type: 'pkcs1',
-                //         format: "pem"
-                //     }
-                // })
+                const privateKey = crypto.randomBytes(64).toString('hex');
+                const publicKey = crypto.randomBytes(64).toString('hex');
 
-                const publicKeyString = await KeyTokenService.createKeyToken({
+                const keyStore = await KeyTokenService.createKeyToken({
                     userId: newShop._id,
-                    publicKey: publicKey
+                    publicKey: publicKey,
+                    privateKey: privateKey
                 })
 
-                if (!publicKeyString) {
+                if (!keyStore) {
                     return ({
                         code: "xxx",
-                        messgae: "publicKeyString error !"
+                        messgae: "keyStore error !"
                     })
                 }
 
-                const pubicKeyObject = crypto.createPublicKey(publicKeyString)
-
-                const tokens = await createTokenPair({ userId: newShop._id, email }, pubicKeyObject, privateKey);
+                const tokens = await createTokenPair({ userId: newShop._id, email }, publicKey, privateKey);
                 return {
                     code: 201,
                     metaData: {

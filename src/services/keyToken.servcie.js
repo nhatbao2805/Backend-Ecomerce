@@ -2,15 +2,14 @@ const keyTokenModel = require("../models/keyToken.model");
 
 class KeyTokenService {
 
-    static createKeyToken = async ({ userId, publicKey }) => {
+    static createKeyToken = async ({ userId, publicKey, privateKey }) => {
         try {
-            // publicKey tại vì sinh ra từ thuật toán bất đối xứng là buffer nên đẩy về string để lưu vào database
-            const publicKeyString = publicKey.toString();
             const token = await keyTokenModel.create({
                 userId: userId,
-                pubicKey: publicKeyString,
+                publicKey: publicKey,
+                privateKey: privateKey,
             })
-            return token ? token.pubicKey : ''
+            return token ? token.publicKey : ''
         } catch (error) {
             return error
         }
