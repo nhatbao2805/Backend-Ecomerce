@@ -34,8 +34,23 @@ app.use(express.urlencoded({
 //init db
 require('./dbs/init.mongodb');
 //init router
-app.use('', require('./routes/index'))
-//handling errors
+app.use('/', require('./routes'))
 
+//handling errors
+//cái này đặt sau để nó phát hiện là 404 tại vì nó kh xuống nếu như nó đã xử lý được ở rout
+app.use((req, res, next) => {
+  const error = new Error('Not Found');
+  error.status = 404;
+  next(error)
+})
+app.use((error, req, res, next) => {
+  const status = error.status || 500;
+  return res.status(status).json({
+    status: 'error',
+    code: status,
+    message: error.message || 'Internal Server Error'
+  })
+
+})
 
 module.exports = app;
