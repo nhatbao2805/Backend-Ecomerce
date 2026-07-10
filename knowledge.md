@@ -30,3 +30,9 @@ console.log(myTool.tinhTong(5, 3)); // Lỗi: myTool.tinhTong is not a function
 
 Bạn có muốn tìm hiểu thêm về cách kế thừa (inheritance) các thuộc tính static này từ lớp cha sang lớp con, hoặc cách kết hợp nó với các thuộc tính private (#) không?
 
+options = { upsert: true, new: true }
+
+upsert: true: nếu không tìm thấy document khớp filter → tự tạo mới (dùng data từ filter + update). Nếu tìm thấy → update như bình thường.
+new: true: trả về document sau khi update/tạo mới (mặc định false sẽ trả về bản ghi cũ trước khi update).
+
+→ Dùng khi cần: "có thì update, chưa có thì tạo mới, và lấy ngay kết quả mới nhất để dùng tiếp". Đây là pattern rất phổ biến và đúng chuẩn cho việc lưu/refresh key-token theo user trong hệ thống auth (JWT + refresh token rotation).
