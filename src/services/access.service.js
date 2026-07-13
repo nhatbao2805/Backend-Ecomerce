@@ -23,7 +23,7 @@ class AccessService {
     */
 
     static logIn = async ({ email, password, refreshToken = null }) => {
-        const foundShop = await findByEmail(email);
+        const foundShop = await findByEmail({ email });
         if (!foundShop) {
             throw new BadRequestError('Error: Shop Not Registered !');
         }
@@ -33,12 +33,13 @@ class AccessService {
 
         const privateKey = crypto.randomBytes(64).toString('hex');
         const publicKey = crypto.randomBytes(64).toString('hex');
-        const tokens = await createTokenPair({ userId: foundShop._id, email }, publicKey, privateKey);
-        await KeyTokenService.createKeyToken({ userId: foundShop._id, publicKey, privateKey, refreshToken: tokens.refreshToken })
-        // return {
-        //     shop: getInforData({ fields: ["_id", "email", "name"], object: foundShop }),
-        //     tokens
-        // }
+        const { _id: userId } = foundShop
+        const tokens = await createTokenPair({ userId: userId, email }, publicKey, privateKey);
+        await KeyTokenService.createKeyToken({ userId: userId, publicKey, privateKey, refreshToken: tokens.refreshToken })
+        return {
+            shop: getInforData({ fields: ["_id", "email", "name"], object: foundShop }),
+            tokens
+        }
     }
 
     static signUp = async ({ name, email, password }) => {

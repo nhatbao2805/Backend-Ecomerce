@@ -1,11 +1,20 @@
 @url_dev = http://localhost:3001/v1/api
 ### signup
-POST {{url_dev}}/shop/signup
+# POST {{url_dev}}/shop/signup
+# Content-Type: application/json
+# x-api-key: 862f63d70f42899a8c12a95e15e4569c8a9a2ebcabedd2d4f09b1679a1a0b4ffffe2a4dfbb17bd62454bf612e387f2066a353940c9188533164e615dcc331971
+
+# {
+#     "name": "Shop Name",
+#     "email": "shozzzz222p2z3111@example.com",
+#     "password": "yourpassword123"
+# }
+
+POST {{url_dev}}/shop/login
 Content-Type: application/json
 x-api-key: 862f63d70f42899a8c12a95e15e4569c8a9a2ebcabedd2d4f09b1679a1a0b4ffffe2a4dfbb17bd62454bf612e387f2066a353940c9188533164e615dcc331971
 
 {
-    "name": "Shop Name",
     "email": "shozzzz222p2z3111@example.com",
     "password": "yourpassword123"
 }
