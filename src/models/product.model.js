@@ -49,9 +49,9 @@ const clothingSchema = new Schema({
 // define the product type = Electronic
 
 const electronicSchema = new Schema({
-    brand: { type: String, required: true },
-    size: String,
-    material: String,
+    manufactuter: { type: String, required: true },
+    model: String,
+    color: String,
 }, {
     timestamps: true,
     collection: 'Electronics'
