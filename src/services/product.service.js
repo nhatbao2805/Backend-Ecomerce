@@ -4,25 +4,34 @@ const { product, clothing, electronic } = require('../models/product.model')
 //define factory pattern class to create product
 
 class ProductFactory {
-
-    typeProduct = Clothing;
-
     /*
         type: 'clothing',
         payload
+        With out Strategy Pattern
     */
-    static createProduct = async (type, payload) => {
-        // switch (type) {
-        //     case 'Electronics':
-        //         return new Electronic(payload).createProduct();
-        //     case 'Clothing':
-        //         return new Clothing(payload).createProduct();
-        //     default:
-        //         throw new BadRequestError(`Invalid ${type} Product`)
-        // }
-        return this.typeProduct(payload).createProduct();
+    // static createProduct = async (type, payload) => {
+    //     switch (type) {
+    //         case 'Electronics':
+    //             return new Electronic(payload).createProduct();
+    //         case 'Clothing':
+    //             return new Clothing(payload).createProduct();
+    //         default:
+    //             throw new BadRequestError(`Invalid ${type} Product`)
+    //     }
+    // }
+
+    // Use Strategy Pattern
+    static productRegistry = {} //key-class
+
+    static registerProductType(type, classRef) {
+        ProductFactory.productRegistry[type] = classRef
     }
 
+    static createProduct = async (type, payload) => {
+        const ProductClass = ProductFactory.productRegistry[type];
+        if (!ProductClass) throw new BadRequestError(`Invalid ${type} Product`);
+        return new ProductClass(payload).createProduct();
+    }
 }
 
 //define base product class
@@ -77,5 +86,8 @@ class Electronic extends Product {
 }
 
 
+//register productTye
+ProductFactory.registerProductType({ 'Clothing': Clothing })
+ProductFactory.registerProductType({ 'Electronic': Electronic })
 
 module.exports = ProductFactory;
