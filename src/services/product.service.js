@@ -1,5 +1,6 @@
 const { BadRequestError } = require('../core/error.response');
-const { product, clothing, electronic } = require('../models/product.model')
+const { product, clothing, electronic } = require('../models/product.model');
+const { findAllDraftForShop, publishedProductByShop, findAllPublishedForShop, unPublishedProductByShop, searchProductsForUser } = require('../models/repositories/product.repo');
 
 //define factory pattern class to create product
 
@@ -19,7 +20,6 @@ class ProductFactory {
     //             throw new BadRequestError(`Invalid ${type} Product`)
     //     }
     // }
-
     // Use Strategy Pattern
     static productRegistry = {} //key-class
 
@@ -31,6 +31,29 @@ class ProductFactory {
         const ProductClass = ProductFactory.productRegistry[type];
         if (!ProductClass) throw new BadRequestError(`Invalid ${type} Product`);
         return new ProductClass(payload).createProduct();
+    }
+
+    static publishedProductByShop = async ({ product_shop, product_id }) => {
+        await publishedProductByShop({ product_shop, product_id })
+    }
+
+    static unPublishedProductByShop = async ({ product_shop, product_id }) => {
+        await unPublishedProductByShop({ product_shop, product_id })
+    }
+
+    //query
+    static findAllDraftForShop = async ({ product_shop, limit = 50, skip = 0 }) => {
+        const query = { product_shop, isDraft: true }
+        await findAllDraftForShop({ query, limit, skip })
+    }
+
+    static findAllPublishedForShop = async ({ product_shop, limit = 50, skip = 0 }) => {
+        const query = { product_shop, isPublished: true }
+        await findAllPublishedForShop({ query, limit, skip })
+    }
+
+    static searchProducts = async ({ keySearch }) => {
+        await searchProductsForUser({ keySearch })
     }
 }
 
@@ -79,7 +102,7 @@ class Electronic extends Product {
             product_shop: this.product_shop
         });
         if (!newElectronic) throw new BadRequestError("Create new Electronic error");
-        const newProduct = await super.createProduct(newElectronic._id); //super cach goi lay class ma no extends
+        const newProduct = await super.createProduct(newElectronic._id);
         if (!newProduct) throw new BadRequestError("Create new Product error");
         return newProduct
     }
