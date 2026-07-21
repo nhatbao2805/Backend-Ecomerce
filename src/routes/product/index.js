@@ -6,6 +6,8 @@ const { authentication } = require('../../auth/authUtils');
 const router = express.Router();
 
 router.get('/search/:keySearch', asyncHandleError(productController.getListSearchProduct));
+router.get('', asyncHandleError(productController.getAllProduct));
+router.post('/:product_id', asyncHandleError(productController.getOneProduct));
 //authentication
 router.use(authentication);
 ////////////////

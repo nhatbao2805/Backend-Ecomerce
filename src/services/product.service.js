@@ -1,6 +1,6 @@
 const { BadRequestError } = require('../core/error.response');
 const { product, clothing, electronic } = require('../models/product.model');
-const { findAllDraftForShop, publishedProductByShop, findAllPublishedForShop, unPublishedProductByShop, searchProductsForUser } = require('../models/repositories/product.repo');
+const { findAllDraftForShop, publishedProductByShop, findAllPublishedForShop, unPublishedProductByShop, searchProductsForUser, findAllProducts, findProduct } = require('../models/repositories/product.repo');
 
 //define factory pattern class to create product
 
@@ -33,6 +33,12 @@ class ProductFactory {
         return new ProductClass(payload).createProduct();
     }
 
+    static updateProduct = async (type, payload) => {
+        const ProductClass = ProductFactory.productRegistry[type];
+        if (!ProductClass) throw new BadRequestError(`Invalid ${type} Product`);
+        return new ProductClass(payload).createProduct();
+    }
+
     static publishedProductByShop = async ({ product_shop, product_id }) => {
         await publishedProductByShop({ product_shop, product_id })
     }
@@ -54,6 +60,14 @@ class ProductFactory {
 
     static searchProducts = async ({ keySearch }) => {
         await searchProductsForUser({ keySearch })
+    }
+
+    static findAllProducts = async ({ limit = 50, sort = 'citme', page = 1, filter = { isPublished: true } }) => {
+        await findAllProducts({ limit, sort, page, filter, select: ['product_name', 'product_thumb', 'product_price'] })
+    }
+
+    static findProduct = async ({ product_id }) => {
+        await findProduct({ product_id, unSelect: ['__v'] })
     }
 }
 
