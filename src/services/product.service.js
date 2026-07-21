@@ -124,7 +124,7 @@ class Electronic extends Product {
 
 
 //register productTye
-ProductFactory.registerProductType({ 'Clothing': Clothing })
-ProductFactory.registerProductType({ 'Electronic': Electronic })
+ProductFactory.registerProductType('Clothing', Clothing)
+ProductFactory.registerProductType('Electronic', Electronic)
 
 module.exports = ProductFactory;
