@@ -12,6 +12,8 @@ router.post('/:product_id', asyncHandleError(productController.getOneProduct));
 router.use(authentication);
 ////////////////
 router.post('', asyncHandleError(productController.createProduct));
+//put thì sẽ cần update hết và patch thì chỉ cần update lại các thuộc tính cần thay đổi để tối ưu hóa băng thông
+router.patch('/:productId', asyncHandleError(productController.updateProduct));
 router.post('/publish/:id', asyncHandleError(productController.publishProductByShop));
 router.post('/unPublish/:id', asyncHandleError(productController.unPublishProductByShop));
 
