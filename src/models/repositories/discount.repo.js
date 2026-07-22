@@ -1,11 +1,8 @@
 const { getUnselectData, getSelectData } = require('../../utils');
 const { discountModel } = require('../discount.model')
 
-const findDiscount = async ({ code, shopId }) => {
-    return await discountModel.findOne({
-        discount_code: code,
-        discount_shopId: convertToObjectIdMongodb(shopId)
-    })
+const findDiscount = async ({ filter, model }) => {
+    return await model.findOne(filter).lean();
 }
 
 const findAllDiscountCodesUnSelect = async ({
@@ -44,8 +41,13 @@ const findAllDiscountCodesSelect = async ({
     return discounts
 }
 
+const updateDiscountById = async ({ code, shopId, bodyUpdate, model, isNew = true }) => {
+    return await model.findOneAndUpdate({ discount_code: code, discount_shopId: convertToObjectIdMongodb(shopId) }, bodyUpdate, { new: isNew });
+}
+
 module.exports = {
     findDiscount,
     findAllDiscountCodesUnSelect,
-    findAllDiscountCodesSelect
+    findAllDiscountCodesSelect,
+    updateDiscountById
 }

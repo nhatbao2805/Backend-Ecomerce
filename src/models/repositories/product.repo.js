@@ -15,20 +15,19 @@ const findAllPublishedForShop = async ({ query, limit, skip }) => {
 const findAllProducts = async ({ limit, sort, page, filter, select }) => {
     const skip = (page - 1) * limit;
     const sortBy = sort === "ctime" ? { _id: -1 } : { _id: 1 }
-    const product = await product.find(filter)
+    const products = await product.find(filter)
         .sort(sortBy)
         .skip(skip)
         .limit(limit)
-        .lean()
-        .exec()
         .select(getSelectData(select))
-        .lean();
+        .lean()
+        .exec();
 
-    return product;
+    return products;
 }
 
 const findProduct = async ({ product_id, unSelect }) => {
-    return await product.findById({ _id: product_id }).select(getUnselectData(unSelect)).lean();
+    return await product.findById(product_id).select(getUnselectData(unSelect)).lean();
 }
 
 const updateProductById = async ({ product_id, bodyUpdate, model, isNew = true }) => {
