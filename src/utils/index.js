@@ -14,7 +14,7 @@ const getUnselectData = (select = []) => {
 
 const removeUndefinedObject = (obj) => {
     Object.keys(obj).forEach(k => {
-        if (obj[k] == null) {
+        if (obj[k] === undefined) {
             delete obj[k]
         }
     })
@@ -23,11 +23,13 @@ const removeUndefinedObject = (obj) => {
 
 const removeNestedObjectParser = (obj) => {
     const final = {}
-    Object.keys(final).forEach(k => {
-        if (typeof obj[k] === "Object" && !Array.isArray(obj[k])) {
+    Object.keys(obj).forEach(k => {
+        if (obj[k] === undefined) return;
+
+        if (_.isPlainObject(obj[k])) {
             const response = removeNestedObjectParser(obj[k])
-            Object.keys(response).forEach(k => {
-                final[`${k}.${a}`] = res[a]
+            Object.keys(response).forEach(a => {
+                final[`${k}.${a}`] = response[a]
             })
         } else {
             final[k] = obj[k]
