@@ -1,7 +1,7 @@
 const { Types } = require("mongoose")
 const { product } = require("../product.model")
 const { BadRequestError } = require("../../core/error.response")
-const { getSelectData, getUnselectData } = require("../../utils")
+const { getSelectData, getUnselectData, convertToObjectIdMongodb } = require("../../utils")
 
 
 const findAllDraftForShop = async ({ query, limit, skip }) => {
@@ -75,6 +75,9 @@ const updateStatusProductByShop = async ({ product_shop, product_id, isDraft, is
     return updatedProduct
 }
 
+const getProductById = async (productId) => {
+    return await product.findById({ _id: convertToObjectIdMongodb(productId) }).lean();
+}
 
 module.exports = {
     findAllDraftForShop,
@@ -85,5 +88,5 @@ module.exports = {
     findAllProducts,
     findProduct,
     updateProductById,
-
+    getProductById
 }
