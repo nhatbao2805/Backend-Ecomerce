@@ -3,6 +3,7 @@ const { AuthFailureError, NotFoundError, BadRequestError } = require('../core/er
 const { checkProductByServer } = require("../models/repositories/product.repo");
 const { getDiscountAmount } = require("./discount.service");
 const { getAmountDiscountByServer } = require("../models/repositories/discount.repo");
+const { acquireLock, releaseLock } = require("./redis.service");
 
 class CheckoutService {
     /*
@@ -13,7 +14,7 @@ class CheckoutService {
                {
                    shopId,
                    shop_discounts:[],
-                   item_product: [
+                   item_products: [
                        price,
                        quantity,
                        productId
@@ -76,6 +77,38 @@ class CheckoutService {
             });
         }
 
+        return {
+            shop_order_ids,
+            shop_order_ids_new,
+            checkout_order
+        }
+    }
+
+    static orderByUser = async ({ shop_order_ids, cartId, userId, user_address, user_payment }) => {
+        const { shop_order_ids_new, checkout_order } = await CheckoutService.checkoutReview({ cartId, userId, shop_order_ids: shop_order_ids })
+
+        //check lai mot lan nua co vuot ton kho khong
+        const products = shop_order_ids_new.flatMap(v => v.item_products);
+
+        //dung optimistic lock (khóa lạc quan) => có nhiều luồng cùng lúc truy cập vào nhưng gom lại hết và cho phép từng luồng đi vào lấy giá trị xong rồi trả về lại nhược điểm thời gian đợi lâu
+        const acquireLockProduct = [];
+        for (let i = 0; i < products.length; i++) {
+            const { productId, quantity } = products[i]
+            const keyLock = await acquireLock(productId, quantity, cartId);
+            acquireLockProduct(keyLock ? true : false);
+            if (keyLock) {
+                await releaseLock(keyLock)
+            }
+        }
+
+        //check lai neu co 1 san pham het hang trong kho
+        if (acquireLockProduct.includes(false)) {
+            throw new BadRequestError("Someone product false!")
+        }
+
+        const newOrder = await create();
+
+        return newOrder
     }
 
 }
