@@ -1,5 +1,5 @@
 const { BadRequestError, NotFoundError } = require('../core/error.response');
-const { discountModel } = require('../models/discount.model');
+const discountModel = require('../models/discount.model');
 const { findDiscount, findAllDiscountCodesSelect, findAllDiscountCodesUnSelect, updateDiscountById } = require('../models/repositories/discount.repo');
 const { findAllProducts } = require('../models/repositories/product.repo');
 const { convertToObjectIdMongodb } = require('../utils');
@@ -217,8 +217,8 @@ class DiscountService {
         }
 
         // Check if discount is fixed_amount or percentage, capped at totalOrder
-        const amount = discount_type === "fixed_amount" 
-            ? Math.min(discount_value, totalOrder) 
+        const amount = discount_type === "fixed_amount"
+            ? Math.min(discount_value, totalOrder)
             : +(totalOrder * (discount_value / 100)).toFixed(2);
 
         return {
@@ -227,6 +227,7 @@ class DiscountService {
             totalPrice: totalOrder - amount
         };
     }
+
 
     static deleteDiscountCode = async ({ shopId, codeId }) => {
         const foundDiscount = await findDiscount({

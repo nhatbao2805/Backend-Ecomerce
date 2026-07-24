@@ -1,5 +1,5 @@
 const { getUnselectData, getSelectData } = require('../../utils');
-const { discountModel } = require('../discount.model')
+const discountModel = require('../discount.model')
 
 const findDiscount = async ({ filter, model }) => {
     return await model.findOne(filter).lean();

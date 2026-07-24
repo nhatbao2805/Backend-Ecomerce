@@ -76,7 +76,20 @@ const updateStatusProductByShop = async ({ product_shop, product_id, isDraft, is
 }
 
 const getProductById = async (productId) => {
-    return await product.findById({ _id: convertToObjectIdMongodb(productId) }).lean();
+    return await product.findById(convertToObjectIdMongodb(productId)).lean();
+}
+
+const checkProductByServer = async (products) => {
+    return await Promise.all(products.map(async (p) => {
+        const foundProduct = await getProductById(p.productId);
+        if (foundProduct) {
+            return {
+                price: foundProduct.product_price,
+                quantity: p.quantity,
+                productId: p.productId
+            }
+        }
+    }))
 }
 
 module.exports = {
@@ -88,5 +101,6 @@ module.exports = {
     findAllProducts,
     findProduct,
     updateProductById,
-    getProductById
+    getProductById,
+    checkProductByServer
 }
