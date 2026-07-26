@@ -1,9 +1,11 @@
-const { findCartById } = require("../models/repositories/cart.repo");
+const { findCartById, removeProductInCartById } = require("../models/repositories/cart.repo");
 const { AuthFailureError, NotFoundError, BadRequestError } = require('../core/error.response');
 const { checkProductByServer } = require("../models/repositories/product.repo");
 const { getDiscountAmount } = require("./discount.service");
 const { getAmountDiscountByServer } = require("../models/repositories/discount.repo");
 const { acquireLock, releaseLock } = require("./redis.service");
+const orderModel = require("../models/order.model");
+const cartModel = require("../models/cart.model");
 
 class CheckoutService {
     /*
@@ -106,8 +108,20 @@ class CheckoutService {
             throw new BadRequestError("Someone product false!")
         }
 
-        const newOrder = await create();
+        const newOrder = await orderModel.create({
+            order_userId: userId,
+            order_checkout: checkout_order,
+            order_shipping: user_address,
+            order_payment: user_payment,
+            order_products: shop_order_ids_new, // shop_order_ids_new
+        })
 
+        // neu nhu insert thanh cong thi remove di product co trong gio hang
+        if (newOrder) {
+            const productIds = shop_order_ids.flatMap(shop => shop.item_products.map(p => p.productId));
+            const removeProductInCart = await removeProductInCartById({ cartId, userId, productIds });
+            if (!removeProductInCart) throw new BadRequestError("Remove product failed!")
+        }
         return newOrder
     }
 
