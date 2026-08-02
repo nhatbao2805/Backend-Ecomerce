@@ -1,0 +1,1277 @@
+{
+  "info": {
+    "_postman_id": "ecommerce-api-collection-id-12345",
+    "name": "Ecommerce API Backend Project",
+    "description": "Collection for testing all features in the Backend Ecommerce project including Auth, Product, Cart, Discount, Checkout, and Order APIs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Access API (Shop Auth)",
+      "item": [
+        {
+          "name": "Shop Sign Up",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Shop Name Example\",\n  \"email\": \"shopexample123@example.com\",\n  \"password\": \"yourpassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/shop/signup",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "shop",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Shop Log In",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"shopexample123@example.com\",\n  \"password\": \"yourpassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/shop/login",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "shop",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Shop Log Out",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/shop/logout",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "shop",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Handle Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/shop/handlerRefreshToken",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "shop",
+                "handlerRefreshToken"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Product API",
+      "item": [
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_name\": \"Sony PS5 Console\",\n  \"product_thumb\": \"https://example.com/ps5.jpg\",\n  \"product_description\": \"Next-gen gaming console\",\n  \"product_price\": 499,\n  \"product_quantity\": 50,\n  \"product_type\": \"Electronics\",\n  \"product_attributes\": {\n    \"manufactuter\": \"Sony\",\n    \"model\": \"CFI-1200A\",\n    \"color\": \"White\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/product",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "product"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_name\": \"Sony PS5 Console Slim\",\n  \"product_price\": 450,\n  \"product_type\": \"Electronics\",\n  \"product_attributes\": {\n    \"manufactuter\": \"Sony\",\n    \"model\": \"CFI-2000 Slim\",\n    \"color\": \"White/Black\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/product/{{product_id}}",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "product",
+                "{{product_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Product by Shop",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/product/publish/{{product_id}}",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "product",
+                "publish",
+                "{{product_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unpublish Product by Shop",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/product/unPublish/{{product_id}}",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "product",
+                "unPublish",
+                "{{product_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Drafts for Shop",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/product/drafts/all",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "product",
+                "drafts",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Published for Shop",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/product/published/all",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "product",
+                "published",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Products for User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/product/search/Sony",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "product",
+                "search",
+                "Sony"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/product?limit=50&page=1&sort=ctime",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "product"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "sort",
+                  "value": "ctime"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get One Product Details",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/product/{{product_id}}",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "product",
+                "{{product_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cart API",
+      "item": [
+        {
+          "name": "Add Product to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product\": {\n    \"productId\": \"{{product_id}}\",\n    \"quantity\": 1,\n    \"price\": 499,\n    \"name\": \"Sony PS5 Console\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/cart",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Cart (V2)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shop_order_ids\": [\n    {\n      \"shopId\": \"{{shop_id}}\",\n      \"item_products\": [\n        {\n          \"productId\": \"{{product_id}}\",\n          \"quantity\": 3,\n          \"old_quantity\": 1\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/cart/update",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "cart",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/cart",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Cart List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/cart",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Discount API",
+      "item": [
+        {
+          "name": "Create Discount Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SUMMER2026\",\n  \"start_date\": \"2026-07-22T00:00:00.000Z\",\n  \"end_date\": \"2026-08-30T00:00:00.000Z\",\n  \"is_active\": true,\n  \"min_order_value\": 100,\n  \"applies_to\": \"all\",\n  \"name\": \"Summer Discount\",\n  \"description\": \"Get 20 USD off for summer orders\",\n  \"type\": \"fixed_amount\",\n  \"value\": 20,\n  \"max_uses\": 100,\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/discount",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "discount"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Discount Code",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SUMMER2026\",\n  \"start_date\": \"2026-07-22T00:00:00.000Z\",\n  \"end_date\": \"2026-09-15T00:00:00.000Z\",\n  \"name\": \"Summer Discount Updated\",\n  \"description\": \"Get 20 USD off updated\",\n  \"min_order_value\": 120\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/discount",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "discount"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Discount Codes by Shop",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/discount?limit=50&page=1",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "discount"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Discount Amount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codeId\": \"SUMMER2026\",\n  \"shopId\": \"{{shop_id}}\",\n  \"products\": [\n    {\n      \"productId\": \"{{product_id}}\",\n      \"quantity\": 2,\n      \"price\": 499\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/discount/amount",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "discount",
+                "amount"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Discount Code Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/discount/list_product?code=SUMMER2026&shopId={{shop_id}}&limit=10&page=1",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "discount",
+                "list_product"
+              ],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "SUMMER2026"
+                },
+                {
+                  "key": "shopId",
+                  "value": "{{shop_id}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Discount Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codeId\": \"SUMMER2026\",\n  \"shopId\": \"{{shop_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/discount/cancel",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "discount",
+                "cancel"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Discount Code",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/discount/SUMMER2026",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "discount",
+                "SUMMER2026"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Checkout API",
+      "item": [
+        {
+          "name": "Checkout Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cartId\": \"{{cart_id}}\",\n  \"shop_order_ids\": [\n    {\n      \"shopId\": \"{{shop_id}}\",\n      \"shop_discounts\": [\n        {\n          \"codeId\": \"SUMMER2026\"\n        }\n      ],\n      \"item_products\": [\n        {\n          \"productId\": \"{{product_id}}\",\n          \"quantity\": 2,\n          \"price\": 499\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/checkout/review",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "checkout",
+                "review"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Order API",
+      "item": [
+        {
+          "name": "Place Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cartId\": \"{{cart_id}}\",\n  \"shop_order_ids\": [\n    {\n      \"shopId\": \"{{shop_id}}\",\n      \"shop_discounts\": [\n        {\n          \"codeId\": \"SUMMER2026\"\n        }\n      ],\n      \"item_products\": [\n        {\n          \"productId\": \"{{product_id}}\",\n          \"quantity\": 2,\n          \"price\": 499\n        }\n      ]\n    }\n  ],\n  \"user_address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"HCM City\",\n    \"state\": \"VN\",\n    \"country\": \"Vietnam\"\n  },\n  \"user_payment\": {\n    \"payment_method\": \"cod\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/order",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "order"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/order",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "order"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/order/{{order_id}}",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "order",
+                "{{order_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url_dev}}/order/cancel/{{order_id}}",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "order",
+                "cancel",
+                "{{order_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Order Status by Shop",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "x-client-id",
+                "value": "{{client_id}}",
+                "type": "text"
+              },
+              {
+                "key": "authorization",
+                "value": "{{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"{{order_id}}\",\n  \"status\": \"confirmed\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url_dev}}/order/status",
+              "host": [
+                "{{url_dev}}"
+              ],
+              "path": [
+                "order",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "url_dev",
+      "value": "http://localhost:3001/v1/api",
+      "type": "string"
+    },
+    {
+      "key": "api_key",
+      "value": "your-api-key-here",
+      "type": "string"
+    },
+    {
+      "key": "client_id",
+      "value": "your-client-id-here",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "your-access-token-here",
+      "type": "string"
+    },
+    {
+      "key": "shop_id",
+      "value": "your-shop-id-here",
+      "type": "string"
+    },
+    {
+      "key": "product_id",
+      "value": "your-product-id-here",
+      "type": "string"
+    },
+    {
+      "key": "cart_id",
+      "value": "your-cart-id-here",
+      "type": "string"
+    },
+    {
+      "key": "order_id",
+      "value": "your-order-id-here",
+      "type": "string"
+    }
+  ]
+}
